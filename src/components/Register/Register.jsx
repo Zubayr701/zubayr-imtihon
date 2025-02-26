@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { registerUser } from "../../store/authAction";
+import { Navigate, useNavigate } from "react-router-dom";
+import Login from "../Login/Login";
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   display: "flex",
@@ -22,12 +24,17 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 function Register() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = () => {
-    dispatch(registerUser({ username, password }));
+    dispatch(registerUser({ username, password })).then((result) => {
+      if (result) {
+        navigate("/private");
+      }
+    });
   };
 
   return (
@@ -60,14 +67,19 @@ function Register() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <StyledButton
-          variant="contained"
-          color="primary"
+        
+          <StyledButton
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleRegister}
+          >
+            Register
+          </StyledButton>
+          <Button
+          color="blue"
           fullWidth
-          onClick={handleRegister}
-        >
-          Register
-        </StyledButton>
+          onClick={() => navigate("/login")} >Login</Button>
       </Box>
     </StyledContainer>
   );

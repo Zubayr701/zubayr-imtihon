@@ -74,6 +74,10 @@ function Login() {
         >
           Login
         </StyledButton>
+        <Button
+          color="blue"
+          fullWidth
+          onClick={() => navigate("/")} >Register</Button>
       </Box>
     </StyledContainer>
   );
